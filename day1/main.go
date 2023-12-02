@@ -13,7 +13,7 @@ import (
 type Filepath string
 
 func (f *Filepath) lines() ([]string, error) {
-	bytes, err := os.ReadFile("input")
+	bytes, err := os.ReadFile(string(*f))
 
 	if err != nil {
 		return nil, err
@@ -173,7 +173,7 @@ func star2(lines []string) {
 }
 
 func main() {
-	var filename Filepath = "input"
+	var filename Filepath = "day1/input"
 
 	lines, err := filename.lines()
 
@@ -181,5 +181,4 @@ func main() {
 
 	star1(lines)
 	star2(lines)
-
 }
