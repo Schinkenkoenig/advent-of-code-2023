@@ -174,7 +174,7 @@ func main() {
 	}
 
 	// Star 2
-	total_ratio := 0
+	totalRatio := 0
 	for _, sym := range symbols {
 		adjacentNumbers := make([]Token, 0)
 		for _, num := range numbers {
@@ -184,10 +184,10 @@ func main() {
 		}
 
 		if sym.Literal == "*" && len(adjacentNumbers) == 2 {
-			total_ratio += adjacentNumbers[0].LiteralAsInt() * adjacentNumbers[1].LiteralAsInt()
+			totalRatio += adjacentNumbers[0].LiteralAsInt() * adjacentNumbers[1].LiteralAsInt()
 		}
 	}
 
 	fmt.Println("The result for star 1 is: ", total)
-	fmt.Println("The result for star 2 is: ", total_ratio)
+	fmt.Println("The result for star 2 is: ", totalRatio)
 }
