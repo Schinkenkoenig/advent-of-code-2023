@@ -219,10 +219,12 @@ func star1(lines []string) {
 
 }
 
+// 23806951
 func star2(lines []string) {
 
+	winnings := make(map[int]int, 0)
 	copies := make(map[int]int, 0)
-
+	cards := make([]Card, 0)
 	noWhitespaceLines := make([]string, 0)
 
 	for _, l := range lines {
@@ -231,7 +233,7 @@ func star2(lines []string) {
 		}
 	}
 
-	for lineNumber, l := range noWhitespaceLines {
+	for _, l := range noWhitespaceLines {
 		if l == "" {
 			continue
 		}
@@ -240,7 +242,8 @@ func star2(lines []string) {
 			continue
 		}
 
-		t.readCard()
+		card := t.readCard()
+		cards = append(cards, card)
 
 		winningNumbers := t.readWinningNumbers()
 
@@ -254,33 +257,22 @@ func star2(lines []string) {
 			}
 		}
 
+		winnings[card.number] = len(winners)
+		copies[card.number] = 1
 		// Create copies
-
-		if len(winners) > 0 {
-
-			if _, ok := copies[lineNumber]; !ok {
-				copies[lineNumber] = 1
-			} else {
-
-				copies[lineNumber] += 1
-			}
-		}
-
-		i := 1
-		for i <= len(winners) && i+lineNumber < len(lines) {
-			_, ok := copies[lineNumber+i]
-			if ok {
-				copies[lineNumber+i] += copies[lineNumber]
-			} else {
-
-				copies[lineNumber+i] = 1
-			}
-			i++
-
-		}
-
 	}
 
+	for _, c := range cards {
+		e := 0
+		for e < copies[c.number] {
+			i := 0
+			for i < winnings[c.number] {
+				copies[c.number+i+1] += 1
+				i++
+			}
+			e++
+		}
+	}
 	sum := 0
 	for _, v := range copies {
 		sum += v
@@ -289,7 +281,7 @@ func star2(lines []string) {
 }
 
 func main() {
-	var filename Filepath = "day4/input_test"
+	var filename Filepath = "day4/input"
 
 	lines, err := filename.lines()
 
